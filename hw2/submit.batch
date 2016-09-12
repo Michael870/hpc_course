@@ -1,48 +1,14 @@
 #!/bin/bash
-#
-# Example shell script for jobs on the Center for Simulation and Modeling (SaM) cluster (Frank)
-# $Revision: 1.0 $
-# $Date: 03/07/13 01:37:01PM $
-# $Author: barmada $
-#
-# Note that the switches given for the shell can be modified to give more output from the script. In particular, -vx will output each line of the script as it is read, and then repeat the line with any variable substitutions
-#       This can be pretty handy if you have a script that is dying and you don't know where the problem is occurring
-#
-# PBS control switches:
-#   all PBS control switches can be inserted inside the scripts, preceeded by pound-PBS (#PBS)
-#   some common switches:
-#     -a date_time         run the script at a prespecified date/time
-#     -l resource_list     request the specified resources - as an example, -l nodes=1:ppn=1 requests one node, and one processor (core) on that node for the job. Some common resource requests:
-#     -l nodes=1:ppn=1     nodes = number of nodes (physical compute nodes) requested; ppn = processes-per-node = number of cores requested (default: nodes=1:ppn=1)
-#     -l mem=8GB           request a memory allocation of 8Gb for the job
-#     -l file=500GB        request a node with at least 500GB of free scratch space
-#     -l walltime=24:00:00 request an allowable (maximum) runtime for your job (default: 10 min)
-#     -j oe                merge stdout and stderr stream of job into one output file per job
-#     -q queue_name        specify the queue in which the job should be run (required - no default, though most users will use -q shared to access the general purpose shared queue)
-#     -N name              specify job name
-#     -S shell             command interpreter to be used (required if you want to use other than bash shell)
-#     -v variable_list     export these environment variables
-#     -@ file              read commandline input from file
-#     -t array_request     create a job array (executing a specified number of replicates of your script), where the index number of a particular replicate is given by the $PBS_ARRAYID environment variable
-#
-# PBS environment variables
-#       all PBS jobs inherit certain environment variables which can be referenced in the scripts:
-#               $PBS_O_HOME             your home directory (on the node you execute your qsub command)
-#               $PBS_O_WORKDIR  the directory from which you executed (qsub) your job
-#               $SCRATCH                a temporary space on the local drive of the compute node your job executes on - to be used for local staging of job files
-#               $PBS_ARRAYID    for job arrays, the index of the specific job replicate
  
- 
-#PBS -j oe
-#PBS -N pi_mpi 
-#PBS -q distributed
-#PBS -l nodes=2:ppn=12
-#PBS -l walltime=00:05:00
-#PBS -l mem=24GB
-#PBS -S /bin/bash
+#PBS -j oe                    # merge stdout and stderr stream of job into one output file
+#PBS -N pi_mpi                # job name
+#PBS -q distributed           # Queue (partition) name
+#PBS -l nodes=2:ppn=12        # Request 2 nodes, 12 processes per node
+#PBS -l walltime=00:05:00     # Run time (hh:mm:ss) - 5 minutes
+#PBS -l mem=24GB              # Memory requirement
+#PBS -S /bin/bash             # Use bash shell
 #PBS -A cs1645-fall2016 
 
-# This will tell you which host your job ran on:
 echo JOB_ID: $PBS_JOBID JOB_NAME: $PBS_JOBNAME HOSTNAME: $PBS_O_HOST
 echo start_time: `date`
  
